@@ -17,9 +17,7 @@ df.columns = ["unit", "cycles", "Op1","Op2", "Op3", "S1", "S2","S3", "S4", "S5",
               "S9", "S10", "S11","S12", "S13", "S14", "S15", "S16", "S17", "S18", "S19", "S20", "S21"]
 
 
-
 # Removing unnecessary data due to no/less corelation
-
 df.drop(['Op1', 'Op2', 'Op3','S1', 'S5', 'S6', 'S16', 'S10', 'S18', 'S19'], axis=1, inplace=True)
 
 # create dataframe for correlation matrix to remove unit and cycle
@@ -28,7 +26,6 @@ corr_df.drop(['unit', 'cycles'], axis=1, inplace=True)
 
 
 #Dividing the dataset into train(80%) and test data(20%)
-
 # train set
 df_train = df[(df.unit <= 80)]
 X_train = df_train[['S2', 'S3', 'S4', 'S7', 'S8', 'S9', 'S11', 'S12',
@@ -43,21 +40,21 @@ y_test = df_test[['cycles']].values.ravel()
 
 
 # creating and training linear regression model
-lreg = linear_model.LinearRegression()
-lreg.fit(X_train, y_train)
+linearReg = linear_model.LinearRegression()
+linearReg.fit(X_train, y_train)
 
 # prediction
-lreg_prediction = lreg.predict(X_test)
+linearReg_prediction = linearReg.predict(X_test)
 
 # RMSE
-lreg_rmse = sqrt(mean_squared_error(y_test, lreg_prediction))
-print("RMSE: ", lreg_rmse)
+linearReg_rmse = sqrt(mean_squared_error(y_test, linearReg_prediction))
+print("RMSE: ", linearReg_rmse)
 
-# r2 score
-lreg_r2 = r2_score(y_test, lreg_prediction)
-print("r2 score: ", lreg_r2)
+# R-squared
+lreg_Rsquared = Rsquared_score(y_test, linearReg_prediction)
+print("R-squared: ", linearReg_Rsquared)
 
 #Display the actual and predict output
 plt.figure(figsize = (16, 8))
 plt.plot(y_test)
-plt.plot(lreg_prediction)
+plt.plot(linearReg_prediction)
